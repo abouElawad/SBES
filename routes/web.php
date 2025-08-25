@@ -1,7 +1,11 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
+use App\Models\User;
+use App\Mail\LoginMail;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProfileController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -16,5 +20,20 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+Route::group([],function(){
+  
+  Route::get('/send-emails',fn()=> view('sendemails'));
+
+  Route::post('/send-emails',function(Request $request){
+     $emails = User::limit(5)->pluck('email')->toArray();
+       foreach($emails as $email){
+
+         Mail::to($email)->send(new LoginMail($request));
+       }
+    return to_route('dashboard');
+  })->name('sendemails');
+});
+
 
 require __DIR__.'/auth.php';
