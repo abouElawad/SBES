@@ -18,17 +18,19 @@ class SendEmailsController extends Controller
 
     public function send(Request $request)
     {
-      $emails = User::limit(5)->pluck('email')->toArray();
-
+      // $emails = User::limit(500)->chunk(40)->pluck('email')->toArray();
+      $batches = User::limit(500)->pluck('email')->chunk(45);
     
     $requestData = $request->only(['body', 'title']); 
     $senderEmail = auth()->user()->email;
-    foreach ($emails as $email) {
+    $delay = 0;
+
+    foreach ($batches as $emails) {
               
-               DailyEmails::dispatch($email, $senderEmail,$requestData);
+               DailyEmails::dispatch($emails->toArray(), $senderEmail,$requestData) ->delay(now()->addSeconds($delay));
+               $delay+=10;
     }
      
-
     return to_route('dashboard');
      
     }
