@@ -1,6 +1,7 @@
 <x-mail::message>
 
 
-<strong>{{ $request->body }}</strong>
+<strong>check {{ $request['title'] }}</strong>
+<strong>{{ $request['body'] }}</strong>
 {{ config('app.name') }}
 </x-mail::message>

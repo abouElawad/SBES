@@ -16,10 +16,9 @@ class LoginMail extends Mailable
     /**
      * Create a new message instance.
      */
-    public $request;
-    public function __construct($request)
+    public function __construct(public array $request,public string $fromEmail)
     {
-        $this->request = $request;
+       
     }
 
     /**
@@ -28,8 +27,8 @@ class LoginMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-          from:auth()->user()->email,
-            subject: 'Newsletter email',
+          from:$this->fromEmail,
+            subject: $this->request['title'] ?? 'Newsletter feal',
         );
     }
 

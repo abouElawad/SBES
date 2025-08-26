@@ -6,34 +6,28 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SendEmailsController;
 
 Route::get('/', function () {
-    return view('welcome');
+  return view('welcome');
 });
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+  return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+  Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+  Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+  Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::group([],function(){
-  
-  Route::get('/send-emails',fn()=> view('sendemails'));
+Route::group([], function () {
 
-  Route::post('/send-emails',function(Request $request){
-     $emails = User::limit(5)->pluck('email')->toArray();
-       foreach($emails as $email){
+  Route::get('/send-emails', [SendEmailsController::class, 'sendEmails']);
 
-         Mail::to($email)->send(new LoginMail($request));
-       }
-    return to_route('dashboard');
-  })->name('sendemails');
+  Route::post('/send-emails', [SendEmailsController::class, 'send'])->name('sendemails');
 });
 
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
