@@ -17,7 +17,7 @@ class DailyEmails implements ShouldQueue
   /**
    * Create a new job instance.
    */
-  public function __construct(public string $email, public array  $requestData)
+  public function __construct(public string $email, public string $senderEmail, public array  $requestData)
   {
     //
   }
@@ -27,7 +27,8 @@ class DailyEmails implements ShouldQueue
    */
   public function handle(): void
   {
+    
 
-
+     Mail::to($this->email)->send(new LoginMail($this->requestData,$this->senderEmail));
   }
 }

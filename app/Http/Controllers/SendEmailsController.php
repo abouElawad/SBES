@@ -22,9 +22,10 @@ class SendEmailsController extends Controller
 
     
     $requestData = $request->only(['body', 'title']); 
-    $fromEmail = auth()->user()->email;
+    $senderEmail = auth()->user()->email;
     foreach ($emails as $email) {
-               Mail::to($email)->queue(new LoginMail($requestData,$fromEmail));
+              
+               DailyEmails::dispatch($email, $senderEmail,$requestData);
     }
      
 
