@@ -48,7 +48,6 @@ class DailyEmails implements ShouldQueue
       $this->emailQueue->update(['status' => 'sent']);
   
   
-dd( $this->emailQueue->status);
   
 }
 
