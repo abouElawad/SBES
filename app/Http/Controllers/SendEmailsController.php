@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\NewsletterRequest;
 use App\Jobs\DailyEmails;
-use App\Models\User;
-use App\Mail\LoginMail;
+use App\Models\Newsletter;
+use App\Models\Subscriber;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Contracts\Queue\ShouldQueue;
+use RealRashid\SweetAlert\Facades\Alert;
+
 
 class SendEmailsController extends Controller 
 {
@@ -16,21 +17,24 @@ class SendEmailsController extends Controller
       return view('sendemails');
     }
 
-    public function send(Request $request)
+    public function send(NewsletterRequest $request)
     {
-      // $emails = User::limit(500)->chunk(40)->pluck('email')->toArray();
-      $batches = User::limit(500)->pluck('email')->chunk(45);
-    
-    $requestData = $request->only(['body', 'title']); 
+      
+      $batches = Subscriber::limit(2)->pluck('email')->chunk(1);
+      $requestData = $request->only(['body', 'subject']); 
     $senderEmail = auth()->user()->email;
     $delay = 0;
-
+    
+    $newsLetter = Newsletter::create($request->validated());
+  
     foreach ($batches as $emails) {
-              
-               DailyEmails::dispatch($emails->toArray(), $senderEmail,$requestData) ->delay(now()->addSeconds($delay));
+      foreach($emails as $email)
+
+               DailyEmails::dispatch($email, $senderEmail,$requestData,$newsLetter)
+                                    ->delay(now()->addSeconds($delay));
                $delay+=10;
     }
-     
+    // Alert::success('success', 'Newsletter sent ');
     return to_route('dashboard');
      
     }

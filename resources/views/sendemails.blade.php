@@ -14,8 +14,8 @@
                   <form method="POST" action= "{{ route('sendemails') }}">
                     @csrf
   <div class="mb-3">
-    <label for="exampleInputEmail1" class="form-label">title</label>
-    <input type="text" class="form-control" name="title" id="exampleInputEmail1" aria-describedby="emailHelp">
+    <label for="exampleInputEmail1" class="form-label">subject</label>
+    <input type="text" class="form-control" name="subject" id="exampleInputEmail1" aria-describedby="emailHelp">
 
     <div class="form-group">
       <label for="my-textarea">body</label>

@@ -28,7 +28,7 @@ class LoginMail extends Mailable
     {
         return new Envelope(
           from:$this->senderEmail,
-            subject: $this->request['title'] ?? 'Newsletter feal',
+            subject: $this->request['subject'] ?? 'Newsletter email',
         );
     }
 
