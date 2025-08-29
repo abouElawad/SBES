@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\EmailQueue;
+use App\Models\Newsletter;
 use App\Models\Subscriber;
 use Illuminate\Http\Request;
 
@@ -18,11 +19,11 @@ class DashboardController extends Controller
     $failedEmails = (clone $emailQueue)->where('status', 'failed')->count();
     $succeedEmails = (clone $emailQueue)->where('status', 'sent')->count();
 
+    $newsLetters = Newsletter::latest()->limit(3)->get();
     return view('dashboard', compact(
       'subscribersCount','allEmails',
       'failedEmails','PendingEmails','processingEmails',
-
-      'succeedEmails'
+      'succeedEmails','newsLetters'
     ));
   }
 }

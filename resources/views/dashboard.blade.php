@@ -41,6 +41,56 @@
     <p class="text-3xl font-extrabold text-red-600">{{ $failedEmails }}</p>
   </div>
 </div>
+
+<div class="bg-white shadow rounded-lg p-6">
+  <h2 class="text-xl font-bold text-gray-700 mb-4">Recent Newsletters</h2>
+  <table class="w-full text-left border-collapse">
+    <thead>
+      <tr class="border-b text-gray-600">
+        <th class="py-2">Title</th>
+        <th class="py-2">Date Sent</th>
+        <th class="py-2">Delivered</th>
+        <th class="py-2">Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      @foreach ($newsLetters as $newsLetter )
+         <tr class="border-b">
+        <td class="py-2">{{ $newsLetter->subject }}</td>
+        <td class="py-2">{{ $newsLetter->created_at }}</td>
+        
+        @php
+         $totalSentNewsLetters =  $newsLetter->emailQueue()->count();
+         $sentNewsLetterCount = $newsLetter->emailQueue()->where('status','sent')->count();
+        @endphp
+        
+        <td class="py-2">{{ $sentNewsLetterCount .'/'. $totalSentNewsLetters }}</td>
+        @if ( $sentNewsLetterCount / $totalSentNewsLetters == 1)
+          <td class="py-2 text-green-600 font-semibold">Completed</td>
+        @elseif ( $sentNewsLetterCount / $totalSentNewsLetters > 0)
+          <td class="py-2 text-yellow-600 font-semibold">Partial</td>
+        @else
+          <td class="py-2 text-red-600 font-semibold">Failed</td>
+        @endif
+        
+      </tr>
+      @endforeach
+{{-- 
+      <tr class="border-b">
+        <td class="py-2">March Updates</td>
+        <td class="py-2">Mar 15</td>
+        <td class="py-2">500 / 500</td>
+        <td class="py-2 text-green-600 font-semibold">Completed</td>
+      </tr>
+      <tr class="border-b">
+        <td class="py-2">Welcome Spring</td>
+        <td class="py-2">Mar 1</td>
+        <td class="py-2">498 / 500</td>
+        <td class="py-2 text-yellow-600 font-semibold">Partial</td>
+      </tr> --}}
+    </tbody>
+  </table>
+</div>
                     {{-- /code here --}}
                 </div>
             </div>

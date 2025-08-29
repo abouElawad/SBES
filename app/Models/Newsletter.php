@@ -15,7 +15,7 @@ class Newsletter extends Model
 
     public function emailQueue()
     {
-      return $this->belongsTo(EmailQueue::class);
+      return $this->hasMany(EmailQueue::class);
     }
    
 
