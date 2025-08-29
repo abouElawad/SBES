@@ -12,12 +12,16 @@ class DashboardController extends Controller
   {
     $subscribersCount = Subscriber::count();
     $emailQueue = EmailQueue::query();
+    $allEmails = (clone $emailQueue)->count();
+    $PendingEmails = (clone $emailQueue)->where('status', 'pending')->count();
+    $processingEmails = (clone $emailQueue)->where('status', 'processing')->count();
     $failedEmails = (clone $emailQueue)->where('status', 'failed')->count();
     $succeedEmails = (clone $emailQueue)->where('status', 'sent')->count();
 
     return view('dashboard', compact(
-      'subscribersCount',
-      'failedEmails',
+      'subscribersCount','allEmails',
+      'failedEmails','PendingEmails','processingEmails',
+
       'succeedEmails'
     ));
   }

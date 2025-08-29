@@ -19,8 +19,21 @@
   </div>
 
   <div class="bg-white shadow rounded-lg p-6 text-center">
+    <h2 class="text-xl font-bold text-gray-700">All Emails</h2>
+    <p class="text-3xl font-extrabold text-green-600">{{ $allEmails }}</p>
+  </div>
+  <div class="bg-white shadow rounded-lg p-6 text-center">
     <h2 class="text-xl font-bold text-gray-700">Sent Emails</h2>
     <p class="text-3xl font-extrabold text-green-600">{{ $succeedEmails }}</p>
+  </div>
+
+  <div class="bg-white shadow rounded-lg p-6 text-center">
+    <h2 class="text-xl font-bold text-gray-700">Processing Emails</h2>
+    <p class="text-3xl font-extrabold text-green-600">{{ $processingEmails }}</p>
+  </div>
+  <div class="bg-white shadow rounded-lg p-6 text-center">
+    <h2 class="text-xl font-bold text-gray-700">Pending Emails</h2>
+    <p class="text-3xl font-extrabold text-green-600">{{ $PendingEmails }}</p>
   </div>
 
   <div class="bg-white shadow rounded-lg p-6 text-center">
