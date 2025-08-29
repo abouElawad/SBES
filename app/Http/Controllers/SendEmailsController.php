@@ -20,7 +20,7 @@ class SendEmailsController extends Controller
     public function send(NewsletterRequest $request)
     {
       
-      $batches = Subscriber::limit(2)->pluck('email')->chunk(1);
+      $batches = Subscriber::limit(100)->pluck('email')->chunk(20);
       $requestData = $request->only(['body', 'subject']); 
     $senderEmail = auth()->user()->email;
     $delay = 0;
@@ -30,9 +30,9 @@ class SendEmailsController extends Controller
     foreach ($batches as $emails) {
       foreach($emails as $email)
 
-               DailyEmails::dispatch($email, $senderEmail,$requestData,$newsLetter)
+              DailyEmails::dispatch($email, $senderEmail,$requestData,$newsLetter)
                                     ->delay(now()->addSeconds($delay));
-               $delay+=10;
+              $delay+=10;
     }
     // Alert::success('success', 'Newsletter sent ');
     return to_route('dashboard');

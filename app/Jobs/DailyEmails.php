@@ -53,6 +53,7 @@ class DailyEmails implements ShouldQueue
 
 public function failed(\Throwable $exception)
   {
+   
     $this->emailQueue->increment('attempts');
 
     if ($this->emailQueue->attempts >= 3) {
@@ -61,7 +62,7 @@ public function failed(\Throwable $exception)
         'last_error' => $exception->getMessage(),
       ]);
     } else {
-      $this->release(300); // retry after 5 minutes
+      $this->release(30); // retry after 5 minutes 300
     }
   }
 }

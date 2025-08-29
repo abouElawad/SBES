@@ -18,7 +18,7 @@ return new class extends Migration
             $table->enum('status',['pending','processing','sent','failed'])->default('pending');
             $table->unsignedSmallInteger('attempts')->nullable();
             $table->longText('last_error')->nullable();
-            $table->timestamp('created_at')->nullable();
+            $table->timestamp('created_at')->useCurrent();
 
         });
     }

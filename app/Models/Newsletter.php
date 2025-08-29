@@ -11,7 +11,7 @@ class Newsletter extends Model
    use HasFactory , Notifiable;
    protected $fillable=['subject','body'];
    public $timestamps = false;
-    protected $dates = ['sent_at'];
+    protected $dates = ['created_at'];
 
     public function emailQueue()
     {
