@@ -19,7 +19,7 @@ class SendEmailsController extends Controller
     public function send(NewsletterRequest $request)
     {
       
-      $batches = Subscriber::limit(2)->pluck('email')->chunk(1);
+      $batches = Subscriber::limit(700)->pluck('email')->chunk(49);
       $requestData = $request->only(['body', 'subject']); 
     $senderEmail = auth()->user()->email;
     $delay = 0;
