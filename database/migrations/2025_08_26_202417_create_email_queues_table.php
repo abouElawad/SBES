@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('newsletter_id')->constrained()->cascadeOnDelete();
             $table->foreignId('subscriber_id')->constrained()->cascadeOnDelete();
             $table->enum('status',['pending','processing','sent','failed'])->default('pending');
-            $table->unsignedSmallInteger('attempts')->nullable();
+            $table->unsignedSmallInteger('attempts')->default(0);
             $table->longText('last_error')->nullable();
             $table->timestamp('created_at')->useCurrent();
 

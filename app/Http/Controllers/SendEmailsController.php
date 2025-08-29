@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\NewsletterRequest;
-use App\Jobs\DailyEmails;
 use App\Models\Newsletter;
 use App\Models\Subscriber;
-use Illuminate\Http\Request;
+use App\Jobs\NewsletterEmail;
+use App\Http\Requests\NewsletterRequest;
 use RealRashid\SweetAlert\Facades\Alert;
 
 
@@ -20,7 +19,7 @@ class SendEmailsController extends Controller
     public function send(NewsletterRequest $request)
     {
       
-      $batches = Subscriber::limit(100)->pluck('email')->chunk(20);
+      $batches = Subscriber::limit(2)->pluck('email')->chunk(1);
       $requestData = $request->only(['body', 'subject']); 
     $senderEmail = auth()->user()->email;
     $delay = 0;
@@ -30,7 +29,7 @@ class SendEmailsController extends Controller
     foreach ($batches as $emails) {
       foreach($emails as $email)
 
-              DailyEmails::dispatch($email, $senderEmail,$requestData,$newsLetter)
+              NewsletterEmail::dispatch($email, $senderEmail,$requestData,$newsLetter)
                                     ->delay(now()->addSeconds($delay));
               $delay+=10;
     }
