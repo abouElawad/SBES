@@ -15,7 +15,7 @@ class Subscriber extends Model
         
     ];
 
-      public function emailQueue()
+      public function emailQueues()
     {
       return $this->hasMany(EmailQueue::class);
     }

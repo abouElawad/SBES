@@ -20,10 +20,10 @@ class EmailQueue extends Model
 
     public function newsletters()
     {
-      $this->belongsTo(Newsletter::class);
+      return $this->belongsTo(Newsletter::class);
     }
-    public function subscribers()
+    public function subscriber()
     {
-      $this->belongsTo(Subscriber::class);
+      return $this->belongsTo(Subscriber::class);
     }
 }

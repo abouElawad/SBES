@@ -45,7 +45,6 @@ class NewsletterEmail implements ShouldQueue
    */
   public function handle(): void
   {
-
     $emailQueue = EmailQueue::find($this->emailQueueId);
     try{
       Mail::to($this->email)->send(new LoginMail($this->requestData, $this->senderEmail));

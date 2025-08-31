@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\SendEmailsController;
+use App\Models\Newsletter;
 
 Route::get('/', function () {
   return view('welcome');
@@ -24,8 +25,10 @@ Route::middleware('auth')->group(function () {
 Route::group([], function () {
 
   Route::get('/send-emails', [SendEmailsController::class, 'sendEmails']);
-
   Route::post('/send-emails', [SendEmailsController::class, 'send'])->name('sendemails');
+  Route::get('newsletter/{newsletter}',[DashboardController::class,'showNewsletter'])->name('newsletter.show');
+  Route::post('/emails/{id}/retry', [SendEmailsController::class, 'retry'])->name('email.retry');
+
 });
 
 

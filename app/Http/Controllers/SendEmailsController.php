@@ -18,14 +18,12 @@ class SendEmailsController extends Controller
 
     public function send(NewsletterRequest $request)
     {
-      
-      $batches = Subscriber::limit(700)->pluck('email')->chunk(49);
+      $batches = Subscriber::limit(10)->pluck('email')->chunk(2);
       $requestData = $request->only(['body', 'subject']); 
     $senderEmail = auth()->user()->email;
     $delay = 0;
     
     $newsLetter = Newsletter::create($request->validated());
-  
     foreach ($batches as $emails) {
       foreach($emails as $email)
 
@@ -37,4 +35,5 @@ class SendEmailsController extends Controller
     return to_route('dashboard');
      
     }
+    
 }

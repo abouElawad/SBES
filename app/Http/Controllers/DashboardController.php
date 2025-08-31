@@ -26,4 +26,19 @@ class DashboardController extends Controller
       'succeedEmails','newsLetters'
     ));
   }
+
+  public function showNewsletter(Newsletter $newsletter)
+  {
+    $newsletter =  $newsletter->load([
+        'emailQueue' => function ($query) {
+            $query->wherein('status', ['pending','sent','failed'])->with('subscriber');
+        }
+    ]);
+    $emailQueues = $newsletter->emailQueue()
+        ->with('subscriber') // eager load subscriber
+        ->paginate();
+
+        
+    return view('newsletter.show',compact('newsletter','emailQueues'));
+  }
 }
