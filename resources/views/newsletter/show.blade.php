@@ -73,7 +73,8 @@
                                     {{ $queue->attempts }}
                                 </td>
                                 <td class="px-4 py-2 text-center">
-                                    @if ($queue->status == 'failed')
+                                  
+                                    @if ( in_array($queue->status,['failed','pending']) )
                                         <form action="{{ route('email.retry', $queue->id) }}" method="POST" class="inline">
                                             @csrf
                                             <button type="submit"
@@ -81,6 +82,7 @@
                                                  text-xs font-medium ">
                                                 Retry
                                             </button>
+                                            
                                         </form>
                                     @else
                                         <span class="text-gray-400 dark:text-gray-500">—</span>

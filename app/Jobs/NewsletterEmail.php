@@ -53,7 +53,6 @@ class NewsletterEmail implements ShouldQueue
     }catch(\Throwable $exception){
       $emailQueue->increment('attempts');
       $emailQueue->update(['status' => 'processing',
-                                       
                                         'last_error' => $exception->getMessage(),
                                       ]);
 

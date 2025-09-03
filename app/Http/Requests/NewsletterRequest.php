@@ -23,7 +23,7 @@ class NewsletterRequest extends FormRequest
     {
         return [
             'subject'=>'required|string|max:255',
-            'body'=>'required|alpha'
+            'body'=>'required|string'
         ];
     }
 }

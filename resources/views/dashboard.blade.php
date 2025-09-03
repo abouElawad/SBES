@@ -74,14 +74,17 @@
           <td class="py-2 text-red-600 font-semibold">Failed</td>
         @endif
 
-          {{-- <td>
+          <td>
+           @if($newsLetter->emailQueue()->whereIn('status', ['failed', 'pending'])->exists())
         <form action="{{ route('email.retry', $newsLetter->id) }}" method="POST">
             @csrf
-            <button type="submit" class="btn btn-warning btn-sm">
+            <button type="submit" class="px-3 py-1 bg-blue-500 hover:bg-blue-600 text-white text-sm font-medium rounded-md shadow">
                 Retry
             </button>
         </form>
-    </td> --}}
+      
+        @endif
+    </td>
       </tr>
     
       @endforeach

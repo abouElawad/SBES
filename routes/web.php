@@ -27,7 +27,7 @@ Route::group([], function () {
   Route::get('/send-emails', [SendEmailsController::class, 'sendEmails']);
   Route::post('/send-emails', [SendEmailsController::class, 'send'])->name('sendemails');
   Route::get('newsletter/{newsletter}',[DashboardController::class,'showNewsletter'])->name('newsletter.show');
-  Route::post('/emails/{id}/retry', [SendEmailsController::class, 'retry'])->name('email.retry');
+  Route::post('/emails/{newsletter}/retry', [SendEmailsController::class, 'retryAll'])->name('email.retry');
 
 });
 

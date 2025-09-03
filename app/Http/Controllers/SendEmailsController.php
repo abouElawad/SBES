@@ -35,5 +35,28 @@ class SendEmailsController extends Controller
     return to_route('dashboard');
      
     }
+
+    public function retryAll(Newsletter $newsletter)
+    {
+      
+      $emailQueues = $newsletter->emailQueue()
+                      ->whereIn('status',['failed','pending'])
+                      ->with('subscriber')
+                      ->get()->pluck('subscriber.email');
+      $batches = $emailQueues->chunk(2);
+    $senderEmail = auth()->user()->email;
+    $newsletterData = $newsletter->only(['body', 'subject']); 
+    $delay = 0;
+    
+    foreach ($batches as $emails) {
+      foreach($emails as $email)
+
+              NewsletterEmail::dispatch($email, $senderEmail, $newsletterData,$newsletter)
+                                    ->delay(now()->addSeconds($delay));
+              $delay+=10;
+    }
+    // Alert::success('success', 'Newsletter sent ');
+    return to_route('dashboard');
+    }
     
 }
