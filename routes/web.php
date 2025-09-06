@@ -22,7 +22,7 @@ Route::middleware('auth')->group(function () {
   Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::group([], function () {
+Route::group(['middleware'=>'auth'], function () {
 
   Route::get('/send-emails', [SendEmailsController::class, 'sendEmails']);
   Route::post('/send-emails', [SendEmailsController::class, 'send'])->name('sendemails');

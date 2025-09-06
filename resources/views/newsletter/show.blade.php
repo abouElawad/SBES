@@ -42,7 +42,7 @@
                             <th class="px-4 py-2 text-left text-sm font-medium text-gray-700 dark:text-gray-300">Status</th>
                             <th class="px-4 py-2 text-left text-sm font-medium text-gray-700 dark:text-gray-300">Last Error</th>
                             <th class="px-4 py-2 text-left text-sm font-medium text-gray-700 dark:text-gray-300">Attempts</th>
-                            <th class="px-4 py-2 text-center text-sm font-medium text-gray-700 dark:text-gray-300">Action</th>
+                            {{-- <th class="px-4 py-2 text-center text-sm font-medium text-gray-700 dark:text-gray-300">Action</th> --}}
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
@@ -72,7 +72,7 @@
                                 <td class="px-4 py-2 text-sm text-gray-600 dark:text-gray-400">
                                     {{ $queue->attempts }}
                                 </td>
-                                <td class="px-4 py-2 text-center">
+                                {{-- <td class="px-4 py-2 text-center">
                                   
                                     @if ( in_array($queue->status,['failed','pending']) )
                                         <form action="{{ route('email.retry', $queue->id) }}" method="POST" class="inline">
@@ -87,7 +87,7 @@
                                     @else
                                         <span class="text-gray-400 dark:text-gray-500">—</span>
                                     @endif
-                                </td>
+                                </td> --}}
                             </tr>
                             @endforeach
                             <div>

@@ -52,7 +52,7 @@ class SendEmailsController extends Controller
       foreach($emails as $email)
 
               NewsletterEmail::dispatch($email, $senderEmail, $newsletterData,$newsletter)
-                                    ->delay(now()->addSeconds($delay));
+                                    ->delay(now()->addSeconds($delay))->then();
               $delay+=10;
     }
     // Alert::success('success', 'Newsletter sent ');
